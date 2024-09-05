@@ -1,0 +1,32 @@
+<!-- Модальное окно -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <!-- Содержимое модального окна -->
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <div class="modal-header">
+                <!-- Заголовок модального окна с классом для размера шрифта -->
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <!-- Кнопка для закрытия модального окна -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Тело модального окна -->
+            <form action="{% url 'create_task' %}" method="POST">
+                {% csrf_token %}
+                <div class="container mt-3">
+                    {{ form.as_p }} <!-- Отображение формы с помощью шаблонного тега формы -->
+                </div>
+
+                <div class="modal-footer">
+
+                <!-- Кнопка для закрытия модального окна -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                <!-- Кнопка для сохранения изменений -->
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>

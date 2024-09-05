@@ -1,0 +1,31 @@
+<!-- PAGINATION -->
+<nav aria-label="Page navigation example" class="float-end">
+    <ul class="pagination">
+
+        <!-- START -->
+        {% if tasks.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1&search={{ search }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?page={{ tasks.previous_page_number }}&search={{ search }}">Назад</a></li>
+        {% endif %}
+
+        <!-- MIDDLE -->
+        <li class="page-item">
+            <a class="page-link" href="#">Страница {{ tasks.paginator.num_pages }} / {{ tasks.number }}</a>
+        </li>
+
+        <!-- END -->
+        {% if tasks.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ tasks.next_page_number }}&search={{ search }}" aria-label="Next">
+                    Следующий
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ tasks.paginator.num_pages }}&search={{ search }}" aria-hidden="true">&raquo;</a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>

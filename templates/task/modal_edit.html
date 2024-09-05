@@ -1,0 +1,54 @@
+<!-- MODAL EDIT-->
+
+<!-- Модальное окно -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog"> <!-- Начало модального диалога -->
+    <div class="modal-content"> <!-- Содержимое модального окна -->
+
+      <!-- MODAL TITLE -->
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Изменение</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- FORM BODY -->
+      <div class="modal-body">
+          <form id="editTaskForm" method="post" action="{% url 'edit-task' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="task_id" id="editTaskId">
+                    <!-- title -->
+                    <div class="mb-3">
+                        <label for="editTaskTitle" class="form-label">Заголовок:</label>
+                        <input type="text" class="form-control" id="editTaskTitle" name="title">
+                    </div>
+
+                    <!-- description -->
+                    <div class="mb-3">
+                        <label for="editTaskDescription" class="form-label">Описание:</label>
+                        <textarea class="form-control" id="editTaskDescription" name="description" rows="7"></textarea>
+                    </div>
+
+                    <!-- is_done -->
+                    <div class="mb-3">
+                        <label for="editTaskDone" class="form-label">Выполнено</label>
+                        <input type="checkbox" class="form-check-input" id="editTaskDone" name="done">
+                    </div>
+
+                    <!-- is_delete -->
+                    <div class="mb-3">
+                        <label for="editTaskDeleted" class="form-label">Удалено</label>
+                        <input type="checkbox" class="form-check-input" id="editTaskDeleted" name="delete">
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="modal-footer">
+                        <!-- close -->
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                        <!-- edit button -->
+                        <button type="submit" class="btn btn-warning float-end">Изменить</button>
+                    </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
