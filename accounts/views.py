@@ -14,8 +14,8 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            messages.success(request, 'Shaxsiy kabinetga xush kelibsiz!')
-            return redirect('home-view')
+            messages.success(request, 'Регистрация прошла успешно! Теперь войдите в аккаунт.')
+            return redirect('login')
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
@@ -27,7 +27,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, "Siz hozir login qildingiz!")
+            messages.success(request, "Теперь вы вошли в систему!")
             return redirect('home-view')
     else:
         form = LoginForm()
@@ -36,7 +36,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    messages.success(request, "Siz hozir logout qildingiz!")
+    messages.success(request, "Вы вышли из системы!")
     return redirect('login')
 
 

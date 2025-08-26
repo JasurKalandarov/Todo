@@ -77,9 +77,9 @@ def search(request):
     tasks = paginator.get_page(page_number)
 
     if tasks_count > 0:
-        messages.success(request, f"{q} {'haqida' if q else ''} {tasks_count} ta ma'lumot topildi!")
+        messages.success(request, f"{q} {'о' if q else ''} {tasks_count} информация найдена!")
     else:
-        messages.error(request, f"{q} haqida ma'lumot topilmadi!")
+        messages.error(request, f"{q} информация не найдена!")
 
     context = {
         'tasks': tasks,
@@ -102,8 +102,8 @@ def create_task(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
-            messages.success(request, f"Задание {task.title} завершено!")
-            return home(request)
+            messages.success(request, f"Задание {task.title} создано!")
+            return redirect('home-view')
 
 
 def custom_redirect(task):
@@ -127,7 +127,7 @@ def edit_task(request):
         task.is_done = request.POST.get('done', 'off') == 'on'
         task.is_delete = request.POST.get('delete', 'off') == 'on'
         task.save()
-        messages.success(request, f"{task.title} topshiriq o'zgartirildi!")
+        messages.success(request, f"{task.title} Задание изменено!")
         # custom redirect
         return custom_redirect(task)
 

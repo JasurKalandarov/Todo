@@ -1,13 +1,25 @@
 {% extends 'auth_base.html' %}
 
 {% block auth %}
-    <h2 class="text-center">Login</h2>
-    <hr>
-    <form method="POST" class="mb-3">
+<div class="auth-card bg-white p-4 rounded-4 shadow-lg" style="max-width:420px; width:100%; z-index:1;">
+    <h2 class="mb-3 text-center">Вход в аккаунт</h2>
+    <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Имя пользователя</label>
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Пароль</label>
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-box-arrow-in-right"></i> Войти
+        </button>
     </form>
     <hr>
-    <p class="text-center">Back to <a href="{% url 'signup' %}">Register</a></p>
+    <p class="text-center">
+        Нет аккаунта? <a href="{% url 'signup' %}">Зарегистрироваться</a>
+    </p>
+</div>
 {% endblock %}

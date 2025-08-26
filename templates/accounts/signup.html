@@ -1,14 +1,56 @@
-
 {% extends 'auth_base.html' %}
 
 {% block auth %}
-    <h2>Sign Up</h2>
+<div class="auth-card bg-white p-4 rounded-4 shadow-lg" style="max-width:420px; width:100%; z-index:1;">
+    <h2 class="mb-3 text-center">Регистрация</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-right"></i> Sign Up</button>
-        <br>
-        <br>
-        <span>Menda allaqachon shaxsiy kabinet bor: <a href="{% url 'login' %}">Login</a></span>
+
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Имя пользователя</label>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_email" class="form-label">Электронная почта</label>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3 position-relative">
+            <label for="id_password1" class="form-label">Пароль</label>
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3 position-relative">
+            <label for="id_password2" class="form-label">Подтвердите пароль</label>
+            {{ form.password2 }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            <i class="bi bi-person-plus"></i> Зарегистрироваться
+        </button>
     </form>
+
+    <hr>
+    <p class="text-center">
+        Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+    </p>
+</div>
+
+<style>
+input[type="password"] {
+    border: 2px solid #ced4da;
+    border-radius: 0.375rem;
+    padding-right: 2.5rem; /* место для иконки глаза */
+}
+</style>
+
+<script>
+document.querySelectorAll('.toggle-password').forEach(function(el){
+    el.addEventListener('click', function(){
+        let input = this.previousElementSibling;
+        input.type = (input.type === 'password') ? 'text' : 'password';
+    });
+});
+</script>
 {% endblock %}

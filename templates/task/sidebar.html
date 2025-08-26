@@ -13,53 +13,72 @@
     </div>
 
     <!-- PROFILE -->
-    <div class="text-start align-middle p-2 bg-body-secondary rounded">
-        <img src="{% static 'img/jesco.jpg' %}" class="rounded-circle w-25" alt="...">
+    <div class="text-center p-4 bg-body-secondary rounded shadow-sm">
+        <img src="{% static 'img/jesco.jpg' %}" class="rounded-circle shadow mb-3" width="90" height="90" alt="User">
         <ul class="list-group list-group-flush fw-normal mt-3">
             <li class="list-group-item bg-transparent">
-                <i class="bi bi-info-square"></i> Ma'lumotlarim
+                <i class="bi bi-info-square"></i> Мои данные
             </li>
             <li class="list-group-item bg-transparent text-danger">
-                <a href="{% url 'logout' %}" class="text-danger"><i class="bi bi-box-arrow-left"></i> Chiqish</a>
+                <a href="{% url 'logout' %}" class="text-danger"><i class="bi bi-box-arrow-left"></i> Выход</a>
             </li>
         </ul>
     </div>
+
+
 </div>
 
 <!-- TASKS LIST -->
 <ol class="list-group">
-    <img src="https://lh6.ggpht.com/aiY9J8YK8Lzr7hMC7nZWlZGiBn8TF_PY7NVNy5U1i5g4zG8yEPzEZTJK2WwbWJUogg"
-         width="100" height="100" class="img-fluid ms-auto" alt="...">
-    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item list-group-item-action">
-        <a class="w-100 ms-2 me-auto link-underline link-underline-opacity-0 d-flex align-items-center justify-content-between"
-           href="{% url 'home-view' %}">
-                    <span class="fw-bold text-warning">
-                        <i class="bi bi-house text-warning"></i> Невыполненные</span>
-            <span class="badge text-bg-warning rounded-pill float-end">{{ todo_count }}</span>
-        </a>
+  <img src="https://lh6.ggpht.com/aiY9J8YK8Lzr7hMC7nZWlZGiBn8TF_PY7NVNy5U1i5g4zG8yEPzEZTJK2WwbWJUogg"
+       width="100" height="100" class="img-fluid ms-auto" alt="...">
+
+    <!-- Невыполненные -->
+    <li class="list-group-item list-group-item-action rounded-top" style="border-left: 5px solid #FFC107;">
+      <a class="d-flex justify-content-between align-items-center link-underline link-underline-opacity-0"
+         href="{% url 'home-view' %}">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-house text-warning"></i>
+          <span class="fw-bold text-warning">Невыполненные</span>
+        </div>
+        <span class="badge text-bg-warning rounded-pill">{{ todo_count }}</span>
+      </a>
     </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item list-group-item-action">
-        <a class="w-100 ms-2 me-auto link-underline link-underline-opacity-0 d-flex align-items-center justify-content-between"
-           href="{% url 'done_task_view' %}">
-                    <span class="fw-bold text-success">
-                        <i class="bi bi-calendar-check text-success"></i> Выполненные</span>
-            <span class="badge text-bg-success rounded-pill float-end">{{ done_count }}</span>
-        </a>
+
+    <!-- Выполненные -->
+    <li class="list-group-item list-group-item-action" style="border-left: 5px solid #198754;">
+    <a class="d-flex justify-content-between align-items-center link-underline link-underline-opacity-0"
+       href="{% url 'done_task_view' %}">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-calendar-check text-success"></i>
+        <span class="fw-bold text-success">Выполненные</span>
+      </div>
+      <span class="badge text-bg-success rounded-pill">{{ done_count }}</span>
+    </a>
     </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start list-group-item list-group-item-action">
-        <a class="w-100 ms-2 me-auto link-underline link-underline-opacity-0 d-flex align-items-center justify-content-between"
-           href="{% url 'task-delete-view' %}">
-                    <span class="fw-bold text-danger">
-                        <i class="bi bi-trash3 text-danger"></i> Удаленные</span>
-            <span class="badge text-bg-danger rounded-pill float-end">{{ deleted_count }}</span>
-        </a>
+
+    <!-- Удаленные -->
+    <li class="list-group-item list-group-item-action"
+        style="border-left: 5px solid #dc3545;">
+      <a class="d-flex justify-content-between align-items-center link-underline link-underline-opacity-0"
+         href="{% url 'task-delete-view' %}">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-trash3 text-danger"></i>
+          <span class="fw-bold text-danger">Удаленные</span>
+        </div>
+        <span class="badge text-bg-danger rounded-pill">{{ deleted_count }}</span>
+      </a>
     </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start list-group-item list-group-item-action">
-        <a class="w-100 ms-2 me-auto link-underline link-underline-opacity-0 d-flex align-items-center justify-content-between"
-           href="{% url 'done-delete-task-view' %}">
-                    <span class="fw-bold text-dark">
-                        <i class="bi bi-trash2-fill"></i> Выполненные и Удаленные</span>
-            <span class="badge text-bg-dark rounded-pill float-end">{{ done_delete_count }}</span>
-        </a>
+
+    <!-- Выполненные и Удаленные -->
+    <li class="list-group-item list-group-item-action" style="border-left: 5px solid #212529;">
+    <a class="d-flex justify-content-between align-items-center link-underline link-underline-opacity-0"
+       href="{% url 'done-delete-task-view' %}">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-trash2-fill text-dark"></i>
+        <span class="fw-bold text-dark">Выполненные и Удаленные</span>
+      </div>
+      <span class="badge text-bg-dark rounded-pill">{{ done_delete_count }}</span>
+    </a>
     </li>
 </ol>
