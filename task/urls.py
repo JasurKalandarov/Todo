@@ -16,5 +16,6 @@ urlpatterns = [
     path('done-deleted-task/', views.done_delete_task_view, name='done-delete-task-view'),
 
     path('search/', views.search, name='search-task'),
+    path('profile/', views.profile,  name='profile')
 
 ]

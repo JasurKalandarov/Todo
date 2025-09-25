@@ -22,12 +22,13 @@
         .list-group-item-success { border-left: 5px solid #28a745; }
         .list-group-item-danger  { border-left: 5px solid #dc3545; }
         .list-group-item-dark    { border-left: 5px solid #343a40; }
+
         /* Карточка с лёгкой тенью */
         .content-card {
             background-color: white;
             box-shadow: 0 6px 20px rgba(0,0,0,0.08);
             border-radius: 12px;
-            min-height: 90vh;
+            height: 735px;;
             padding: 2rem;
         }
     </style>
@@ -55,6 +56,11 @@
             <a href="#" class="text-light" title="Настройки">
                 <i class="bi bi-gear fs-5"></i>
             </a>
+
+            <a href="#offcanvasCalendar" class="text-light" title="Календарь"
+               data-bs-toggle="offcanvas" role="button" aria-controls="offcanvasCalendar">
+                <i class="bi bi-calendar3 fs-5"></i>
+            </a>
         </div>
     </div>
 
@@ -81,6 +87,49 @@
         crossorigin="anonymous"></script>
 
 {% include 'accounts/toasts.html' %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const detailModal = document.getElementById('exampleModalDetail');
+
+    detailModal.addEventListener('show.bs.modal', function (event) {
+        let button = event.relatedTarget;
+
+        let title = button.getAttribute('data-task-title');
+        let description = button.getAttribute('data-task-description');
+        let done = button.getAttribute('data-task-done');
+        let deleted = button.getAttribute('data-task-deleted');
+        let created = button.getAttribute('data-task-created');
+        let updated = button.getAttribute('data-task-updated');
+
+        // функция для форматирования даты в "YYYY-MM-DD HH:mm:ss"
+        function formatDate(dateStr) {
+            if (!dateStr) return "-";
+            let date = new Date(dateStr);
+            if (isNaN(date)) return dateStr;
+
+            let yyyy = date.getFullYear();
+            let mm = String(date.getMonth() + 1).padStart(2, "0");
+            let dd = String(date.getDate()).padStart(2, "0");
+            let hh = String(date.getHours()).padStart(2, "0");
+            let min = String(date.getMinutes()).padStart(2, "0");
+            let ss = String(date.getSeconds()).padStart(2, "0");
+
+            return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+        }
+
+        detailModal.querySelector("#detailTaskTitle").textContent = title || "-";
+        detailModal.querySelector("#detailTaskDescription").textContent = description || "-";
+        detailModal.querySelector("#detailTaskDone").textContent = (done === "True") ? "Да" : "Нет";
+        detailModal.querySelector("#detailTaskDeleted").textContent = (deleted === "True") ? "Да" : "Нет";
+        detailModal.querySelector("#detailTaskCreatedAt").textContent = formatDate(created);
+        detailModal.querySelector("#detailTaskUpdatedAt").textContent = updated ? formatDate(updated) : "Ещё не изменялось";
+    });
+});
+</script>
+
+
+
 
 </body>
 </html>

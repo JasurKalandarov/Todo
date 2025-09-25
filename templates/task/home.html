@@ -8,20 +8,20 @@
 {% include "task/navbar.html" %} <!-- Включает файл с навигационной панелью -->
 
 
-<table class="table table-hover"> <!-- Начало таблицы с классом для наведения -->
+<table class="table table-hover table-striped shadow-sm rounded-3 align-middle">
     <thead>
-    <!-- Пустая строка для отступа -->
     <tr>
         <th class="w-75" scope="col">Задачи</th>
-        <th scope="col" class="ps-5">Изменить</th> <!-- Отступ слева сильнее -->
-        <th scope="col" class="ps-5">Удалить</th>  <!-- Отступ слева сильнее -->
+        <th scope="col" class="text-center" style="width: 120px;">Изменить</th>
+        <th scope="col" class="text-center" style="width: 80px;">Удалить</th>
     </tr>
     </thead>
     <tbody>
-    {% for task in tasks %} <!-- Цикл по всем задачам -->
+    {% for task in tasks %}
     <tr>
-        <!-- HEADER -->
-        <td class="align-middle" data-bs-toggle="modal" data-bs-target="#exampleModalDetail"
+        <!-- ЗАДАЧА -->
+        <td
+            data-bs-toggle="modal" data-bs-target="#exampleModalDetail"
             data-task-id="{{ task.id }}"
             data-task-title="{{ task.title }}"
             data-task-description="{{ task.description }}"
@@ -30,52 +30,75 @@
             data-task-created="{{ task.created_at }}"
             data-task-updated="{{ task.updated_at }}">
 
-            <!-- TODO TITLE -->
-            <h5 class="card-title">
-                <a href="#">
+            <!-- TITLE -->
+            <h5 class="card-title mb-1">
+                <a href="#"
+                   class="task-title-link">
+                    <i class="bi bi-check2-square me-1 text-primary"></i>
                     {{ task.title|truncatechars:40 }}
                 </a>
             </h5>
+            <style>
+            .task-title-link {
+                font-weight: 600;
+                font-size: 1.05rem;
+                color: #283593; /* яркий тёмно-синий */
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+            .task-title-link:hover {
+                color: #1a237e; /* насыщенный глубокий при наведении */
+                background: rgba(40, 53, 147, 0.08); /* подсветка чуть ярче */
+                padding: 2px 4px;
+                border-radius: 4px;
+            }
+            </style>
 
-            <!-- TODO DATETIME -->
-            <div class="align-middle">
+            <!-- STATUS + DATE -->
+            <div>
                 <button class="btn btn-{{task.css_class}} btn-sm"
-                        style=" width: 120px; height: 20px; font-size: 11px; pointer-events: none; line-height: 5px;">
+                        style="width: 120px; height: 20px; font-size: 11px; pointer-events: none; line-height: 5px;">
                     <b>{{ task.status }}</b>
                 </button>
                 <small class="opacity-75">
                     <i class="bi bi-calendar2-event"></i>
-                    {{ task.updated_at| date }}</small>
+                    {{ task.updated_at|date }}
+                </small>
                 <small class="float-end opacity-75">
                     <i class="bi bi-clock-history"></i>
-                    {{ task.updated_at | time }}</small>
+                    {{ task.updated_at|time }}
+                </small>
             </div>
-
         </td>
-        <td class="text-center align-middle">
-            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+
+        <!-- EDIT -->
+        <td class="text-center">
+            <button type="button" class="btn btn-secondary btn-sm shadow"
+                    data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
                     data-task-id="{{ task.id }}"
                     data-task-title="{{ task.title }}"
                     data-task-description="{{ task.description }}"
                     data-task-done="{{ task.is_done }}"
                     data-task-deleted="{{ task.is_delete }}">
-                <i class="bi bi-pencil-square"></i>
-                <!-- Кнопка для редактирования задачи с иконкой карандаша, открывает модальное окно -->
+                <i class="bi bi-pencil-fill"></i>
             </button>
         </td>
+
         <!-- DELETE -->
-        <td class="text-center align-middle">
-            <button class="btn btn-outline-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalDelete"
+        <td class="text-center">
+            <button class="btn btn-danger btn-sm shadow"
+                    data-bs-toggle="modal" data-bs-target="#exampleModalDelete"
                     data-task-id="{{ task.id }}">
                 <i class="bi bi-trash"></i>
             </button>
         </td>
     </tr>
-    {% endfor %} <!-- Конец цикла по задачам -->
+    {% endfor %}
     </tbody>
 </table>
+
+
 
 {% include "task/pagenation.html" %} <!-- Включает файл с пагинацией -->
 {% include "task/modal_create.html" %} <!-- Включает модальное окно для создания задачи -->

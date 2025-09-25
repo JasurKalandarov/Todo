@@ -2,9 +2,17 @@
 {% load static %}
 <style>
     #offcanvasScrolling {
-        width: 350px; /* Укажите желаемую ширину */
+        width: 350px; /* ширина боковой панели */
+    }
+    #calendar {
+        max-width: 100%;
+        margin: 15px auto;
+        background: #fff;
+        border-radius: 8px;
+        padding: 8px;
     }
 </style>
+
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasScrolling"
      aria-labelledby="offcanvasScrollingLabel">
 
@@ -13,18 +21,29 @@
     </div>
 
     <!-- PROFILE -->
-    <div class="text-center p-4 bg-body-secondary rounded shadow-sm">
-        <img src="{% static 'img/jesco.jpg' %}" class="rounded-circle shadow mb-3" width="90" height="90" alt="User">
-        <ul class="list-group list-group-flush fw-normal mt-3">
+    <div class="text-center my-4">
+        <!-- Фото -->
+        <div class="text-center">
+            <img src="{% static 'img/jesco.jpg' %}"
+                 class="rounded-circle shadow mb-3"
+                 width="90" height="90" alt="User">
+            <h5 class="mb-1">{{ request.user.username }}</h5>
+        </div>
+
+        <!-- Меню -->
+        <ul class="list-group list-group-flush mt-3">
             <li class="list-group-item bg-transparent">
-                <i class="bi bi-info-square"></i> Мои данные
+                <a href="{% url 'profile' %}" class="text-decoration-none text-dark">
+                    <i class="bi bi-info-square"></i> Мои данные
+                </a>
             </li>
-            <li class="list-group-item bg-transparent text-danger">
-                <a href="{% url 'logout' %}" class="text-danger"><i class="bi bi-box-arrow-left"></i> Выход</a>
+            <li class="list-group-item bg-transparent">
+                <a href="{% url 'logout' %}" class="text-danger text-decoration-none">
+                    <i class="bi bi-box-arrow-left"></i> Выход
+                </a>
             </li>
         </ul>
     </div>
-
 
 </div>
 
@@ -72,13 +91,25 @@
 
     <!-- Выполненные и Удаленные -->
     <li class="list-group-item list-group-item-action" style="border-left: 5px solid #212529;">
-    <a class="d-flex justify-content-between align-items-center link-underline link-underline-opacity-0"
-       href="{% url 'done-delete-task-view' %}">
-      <div class="d-flex align-items-center gap-2">
-        <i class="bi bi-trash2-fill text-dark"></i>
-        <span class="fw-bold text-dark">Выполненные и Удаленные</span>
-      </div>
-      <span class="badge text-bg-dark rounded-pill">{{ done_delete_count }}</span>
-    </a>
+        <a class="d-flex justify-content-between align-items-center link-underline link-underline-opacity-0"
+        href="{% url 'done-delete-task-view' %}">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-trash2-fill text-dark"></i>
+                <span class="fw-bold text-dark">Выполненные и Удаленные</span>
+            </div>
+            <span class="badge text-bg-dark rounded-pill">{{ done_delete_count }}</span>
+        </a>
     </li>
 </ol>
+
+<!-- Календарь -->
+<div class="offcanvas offcanvas-end text-light" tabindex="-1" id="offcanvasCalendar" aria-labelledby="offcanvasCalendarLabel"
+     style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); width: 350px;">
+    <div class="offcanvas-header border-bottom border-light">
+        <h5 class="offcanvas-title" id="offcanvasCalendarLabel">Календарь</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+    <div class="offcanvas-body">
+        {% include "task/calendar.html" %}
+    </div>
+</div>

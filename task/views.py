@@ -184,3 +184,8 @@ def authenticate_user(request):
 @login_required()
 def register_view(request):
     return render(request, 'signup.html')
+
+
+@login_required()
+def profile(request):
+    return render(request, 'profile.html')
