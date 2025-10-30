@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
 
 from .models import Task
 from task.forms import TaskForm
@@ -144,16 +146,22 @@ def done_task(request):
         return custom_redirect(task)
 
 
-@login_required()
+@login_required
 def delete_task(request):
     if request.method == 'POST':
-        task_id = request.POST['task_id']
-        print(task_id)
-        task = Task.objects.get(pk=task_id)
+        task_id = request.POST.get('task_id')
+
+        if not task_id or not task_id.isdigit():
+            messages.error(request, "Ошибка: ID задачи не передан.")
+            return redirect('home-view')
+
+        task = get_object_or_404(Task, pk=task_id)
         task.is_delete = True
         task.save()
-        messages.success(request, f"{task.title} Задание удалено!")
-        return custom_redirect(task)
+
+        messages.success(request, f"{task.title} удалено!")
+        return redirect('home-view')
+
     return HttpResponse(status=405)
 
 

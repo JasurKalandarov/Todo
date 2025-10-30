@@ -21,14 +21,14 @@
     <tr>
         <!-- ЗАДАЧА -->
         <td
-            data-bs-toggle="modal" data-bs-target="#exampleModalDetail"
-            data-task-id="{{ task.id }}"
-            data-task-title="{{ task.title }}"
-            data-task-description="{{ task.description }}"
-            data-task-done="{{ task.is_done }}"
-            data-task-deleted="{{ task.is_delete }}"
-            data-task-created="{{ task.created_at }}"
-            data-task-updated="{{ task.updated_at }}">
+                data-bs-toggle="modal" data-bs-target="#exampleModalDetail"
+                data-task-id="{{ task.id }}"
+                data-task-title="{{ task.title }}"
+                data-task-description="{{ task.description }}"
+                data-task-done="{{ task.is_done }}"
+                data-task-deleted="{{ task.is_delete }}"
+                data-task-created="{{ task.created_at }}"
+                data-task-updated="{{ task.updated_at }}">
 
             <!-- TITLE -->
             <h5 class="card-title mb-1">
@@ -39,19 +39,19 @@
                 </a>
             </h5>
             <style>
-            .task-title-link {
-                font-weight: 600;
-                font-size: 1.05rem;
-                color: #283593; /* яркий тёмно-синий */
-                text-decoration: none;
-                transition: all 0.3s ease;
-            }
-            .task-title-link:hover {
-                color: #1a237e; /* насыщенный глубокий при наведении */
-                background: rgba(40, 53, 147, 0.08); /* подсветка чуть ярче */
-                padding: 2px 4px;
-                border-radius: 4px;
-            }
+                .task-title-link {
+                    font-weight: 600;
+                    font-size: 1.05rem;
+                    color: #283593; /* яркий тёмно-синий */
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                }
+                .task-title-link:hover {
+                    color: #1a237e; /* насыщенный глубокий при наведении */
+                    background: rgba(40, 53, 147, 0.08); /* подсветка чуть ярче */
+                    padding: 2px 4px;
+                    border-radius: 4px;
+                }
             </style>
 
             <!-- STATUS + DATE -->
@@ -77,18 +77,20 @@
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
                     data-task-id="{{ task.id }}"
-                    data-task-title="{{ task.title }}"
-                    data-task-description="{{ task.description }}"
+                    data-task-title="{{ task.title|escapejs }}"
+                    data-task-description="{{ task.description|escapejs }}"
                     data-task-done="{{ task.is_done }}"
                     data-task-deleted="{{ task.is_delete }}">
                 <i class="bi bi-pencil-fill"></i>
             </button>
         </td>
 
+
         <!-- DELETE -->
         <td class="text-center">
             <button class="btn btn-danger btn-sm shadow"
-                    data-bs-toggle="modal" data-bs-target="#exampleModalDelete"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete"
                     data-task-id="{{ task.id }}">
                 <i class="bi bi-trash"></i>
             </button>
@@ -99,12 +101,46 @@
 </table>
 
 
-
 {% include "task/pagenation.html" %} <!-- Включает файл с пагинацией -->
 {% include "task/modal_create.html" %} <!-- Включает модальное окно для создания задачи -->
 {% include "task/modal_edit.html" %} <!-- Включает модальное окно для редактирования задачи -->
 {% include "task/modal_delete.html" %} <!-- Включает модальное окно для удаления задачи -->
 {% include "task/modal_detail.html" %} <!-- Включает модальное окно для деталей задачи -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteModal = document.getElementById("exampleModalDelete");
+
+        deleteModal.addEventListener("show.bs.modal", function (event) {
+            const button = event.relatedTarget; // кнопка, что открыла модал
+            const taskId = button.getAttribute("data-task-id"); // берём data-task-id
+            document.getElementById("deleteTaskId").value = taskId; // вставляем в скрытое поле
+            console.log("Task ID:", taskId);
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editModal = document.getElementById('staticBackdrop');
+
+        editModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // кнопка, по которой кликнули
+
+            const id = button.getAttribute('data-task-id');
+            const title = button.getAttribute('data-task-title');
+            const description = button.getAttribute('data-task-description');
+            const isDone = button.getAttribute('data-task-done') === "True";
+            const isDelete = button.getAttribute('data-task-deleted') === "True";
+
+            document.getElementById('editTaskId').value = id;
+            document.getElementById('editTaskTitle').value = title;
+            document.getElementById('editTaskDescription').value = description;
+
+            document.getElementById('editTaskDone').checked = isDone;
+            document.getElementById('editTaskDeleted').checked = isDelete;
+        });
+    });
+</script>
 
 {% endblock %} <!-- Конец блока содержимого -->
 
